@@ -78,7 +78,7 @@ def test_conflict_error_handler(client):
     response_json = response.get_json()
     assert response_json["error"]["message"] == "Conflict error"
     assert response_json["error"]["solution"] == "Try again."
-    assert response_json["error"]["name"] == "Conflict Error"
+    assert response_json["error"]["name"] == "Conflict"
     assert response_json["error"]["type"] == "ConflictError"
 
 
@@ -89,7 +89,7 @@ def test_forbidden_error_handler(client):
     response_json = response.get_json()
     assert response_json["error"]["message"] == "Forbidden error"
     assert response_json["error"]["solution"] == "Try again."
-    assert response_json["error"]["name"] == "Forbidden Error"
+    assert response_json["error"]["name"] == "Forbidden"
     assert response_json["error"]["type"] == "ForbiddenError"
 
 
@@ -100,7 +100,7 @@ def test_not_found_error_handler(client):
     response_json = response.get_json()
     assert response_json["error"]["message"] == "Not found error"
     assert response_json["error"]["solution"] == "Try again."
-    assert response_json["error"]["name"] == "Not Found Error"
+    assert response_json["error"]["name"] == "Not Found"
     assert response_json["error"]["type"] == "NotFoundError"
 
 
@@ -111,7 +111,7 @@ def test_unauthorized_error_handler(client):
     response_json = response.get_json()
     assert response_json["error"]["message"] == "Unauthorized error"
     assert response_json["error"]["solution"] == "Try again."
-    assert response_json["error"]["name"] == "Unauthorized Error"
+    assert response_json["error"]["name"] == "Unauthorized"
     assert response_json["error"]["type"] == "UnauthorizedError"
 
 
@@ -122,7 +122,7 @@ def test_origin_is_unreachable_error_handler(client):
     response_json = response.get_json()
     assert response_json["error"]["message"] == "Origin is unreachable error"
     assert response_json["error"]["solution"] == "Try again later."
-    assert response_json["error"]["name"] == "Origin Is Unreachable"
+    assert response_json["error"]["name"] == "Origin is unreachable"
     assert response_json["error"]["type"] == "OriginIsUnreachableError"
 
 
