@@ -1,3 +1,5 @@
+[![Documentation Status](https://readthedocs.org/projects/flask-utils/badge/?version=latest)](https://flask-utils.readthedocs.io/en/latest/?badge=latest)
+
 # Flask-Utils
 
 A collection of useful Flask utilities I use every day in my Flask projects.
