@@ -53,4 +53,5 @@ tox -p
 - [ ] Documentation
 - [ ] Licence
 - [ ] Badges
-- [ ] Automatic build/deployment
+- [ ] Automatic build/deployment (https://github.com/pypa/cibuildwheel)
+- [ ] https://github.com/PyCQA/flake8-bugbear
