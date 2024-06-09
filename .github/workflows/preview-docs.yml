@@ -3,9 +3,9 @@ name: Read the Docs PR preview
 # to the documentation's preview on Read the Docs.
 
 on:
-  pull_request:
-    branches:
-      - main
+  pull_request_target:
+    types:
+      - opened
     paths:
     - 'docs/**'
     - '.github/workflows/preview-docs.yml'
