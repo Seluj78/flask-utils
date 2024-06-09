@@ -1,0 +1,62 @@
+name: Publish Python Package
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    needs:
+      - set_version
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    - name: Install dependencies
+      run: |
+        python3.11 -m pip install --upgrade pip
+        python3.11 -m pip install --upgrade setuptools wheel twine build
+    - name: Create Github Release
+      id: create_release
+      uses: softprops/action-gh-release@v2
+      with:
+        draft: false
+        prerelease: false
+        tag_name: v${{ needs.set_version.outputs.version }}
+        generate_release_notes: true
+    - name: Upload .whl artifact to GitHub release
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./dist/flask_utils-${{ needs.set_version.outputs.version }}-py3-none-any.whl
+        asset_name: flask_utils-${{ needs.set_version.outputs.version }}-py3-none-any.whl
+        asset_content_type: application/zip
+    - name: Upload .tar.gz artifact to GitHub release
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./dist/flask_utils-${{ needs.set_version.outputs.version }}.tar.gz
+        asset_name: flask_utils-${{ needs.set_version.outputs.version }}.tar.gz
+        asset_content_type: application/gzip
+
+  set_version:
+    name: Set the version of the release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set version
+        id: set_version
+        run: |
+          echo version=$( sed -e 's/__version__ = "\(.*\)"/\1/g' <<< $(grep -E '__version__ = ' flask_utils/__init__.py)) >> "$GITHUB_OUTPUT"
+    outputs:
+      version: ${{ steps.set_version.outputs.version }}
