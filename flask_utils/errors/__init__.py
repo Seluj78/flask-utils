@@ -16,6 +16,13 @@ from flask_utils.errors.web_server_is_down import WebServerIsDownError
 
 
 def register_error_handlers(application: Flask) -> None:
+    """
+    This function will register all the error handlers for the application
+
+    :param application: The Flask application to register the error handlers
+    :return: None
+    """
+
     @application.errorhandler(BadRequestError)
     def generate_badrequest(error: BadRequestError) -> Response:
         """
