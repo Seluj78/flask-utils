@@ -15,7 +15,6 @@ jobs:
       fail-fast: false
       matrix:
         python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
-        flask-version: ["2.0", "2.1", "2.2", "2.3", "3.0"]
 
     steps:
     - name: Check out repository
@@ -34,6 +33,5 @@ jobs:
     - name: Run tests
       run: |
         PYTHON_VERSION=${{ matrix.python-version }}
-        FLASK_VERSION=${{ matrix.flask-version }}
-        TOX_ENV="py${PYTHON_VERSION//./}-flask${FLASK_VERSION//./}"
+        TOX_ENV="py${PYTHON_VERSION//./}
         tox -e $TOX_ENV

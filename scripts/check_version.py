@@ -4,16 +4,15 @@ import subprocess
 from packaging import version
 
 
-cat_cmd = subprocess.Popen(("cat", "flask_utils/__init__.py"), stdout=subprocess.PIPE)
-output = subprocess.check_output(("grep", "__version__"), stdin=cat_cmd.stdout).decode("utf-8").strip()
-cat_cmd.wait()
+with open("flask_utils/__init__.py", "r") as file:
+    content = file.read()
 
 
 # Regular expression pattern to find the version
 version_pattern = r'__version__ = "([0-9]+\.[0-9]+\.[0-9]+)"'
 
 # Search for the pattern and extract the version
-match = re.search(version_pattern, output)
+match = re.search(version_pattern, content)
 if match:
     current_version = match.group(1)
 else:
