@@ -24,6 +24,26 @@ def index():
     raise BadRequestError
 ```
 
+```python
+from typing import List, Optional
+from flask import Flask
+from flask_utils import validate_params
+
+app = Flask(__name__)
+
+@app.post('/create-user')
+@validate_params({"first_name": str, "last_name": str, "age": Optional[int], "hobbies": List[str]})
+def create_user():
+    # ...
+    # This will enforce the following rules:
+    # - first_name and last_name must be strings and are required
+    # - age is optional and must be an integer
+    # - hobbies is a list of strings
+    # This is just an example, you can use any type of validation you want
+    return "User created"
+```
+
+
 ## Testing
 
 Install the requirements
