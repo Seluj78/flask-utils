@@ -1,6 +1,7 @@
 -r requirements.txt
 black
 flake8
+mypy
 packaging
 pre-commit
 pytest
