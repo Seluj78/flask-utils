@@ -48,7 +48,7 @@ Run the tests multi-threaded
 tox -p
 ```
 
-# TODO:
+# TODO
 
 - [ ] Documentation
 - [ ] Licence
