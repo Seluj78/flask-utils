@@ -1,0 +1,47 @@
+repos:
+  -   repo: local
+      hooks:
+      -   id: meta-lint-commit
+          name: Lint commit messages
+          entry: ./scripts/lint-commit.sh
+          language: script
+          stages: [commit-msg]
+  -   repo: https://github.com/pycqa/flake8
+      rev: 7.0.0
+      hooks:
+        -   id: flake8
+  -   repo: https://github.com/psf/black
+      rev: 24.4.2
+      hooks:
+        - id: black
+          language_version: python3.11
+  -   repo: https://github.com/asottile/reorder_python_imports
+      rev: v3.13.0
+      hooks:
+        -   id: reorder-python-imports
+            args: [--py3-plus]
+  -   repo: https://github.com/pre-commit/mirrors-mypy
+      rev: v1.10.0
+      hooks:
+        -   id: mypy
+            additional_dependencies:
+              - types-flask
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: check-merge-conflict
+      - id: debug-statements
+      - id: check-case-conflict
+      - id: check-ast
+      - id: check-builtin-literals
+      - id: check-docstring-first
+      - id: detect-private-key
+      - id: end-of-file-fixer
+      - id: forbid-submodules
+      - id: mixed-line-ending
+      - id: name-tests-test
+        args: [--pytest-test-first]
+        exclude: tests/utils.py
+      - id: requirements-txt-fixer
+      - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]

@@ -1,0 +1,62 @@
+# Example configuration for Black.
+
+# NOTE: you have to use single-quoted strings in TOML for regular expressions.
+# It's the equivalent of r-strings in Python.  Multiline strings are treated as
+# verbose regular expressions by Black.  Use [ ] to denote a significant space
+# character.
+
+[tool.black]
+line-length = 119
+target-version = ['py311']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  | .venv
+  | venv
+  | env
+  | .git
+  | migrations
+)/
+'''
+
+[tool.mypy]
+python_version = "3.11"
+warn_unused_configs = true
+ignore_missing_imports = true
+exclude = "tests/"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "Flask-Utils"
+authors = [
+    {name = "Jules Lasne", email = "jules.lasne@gmail.com"},
+]
+readme = "README.md"
+dynamic = ["version", "dependencies"]
+requires-python = ">=3.8"
+classifiers=[
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Natural Language:: English",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "License :: Other/Proprietary License",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.8",
+]
+
+[tool.setuptools]
+packages = ["flask_utils"]
+
+[tool.setuptools.dynamic]
+version = {attr = "flask_utils.__version__"}
+dependencies = {file = ["requirements.txt"]}
+
+[project.optional-dependencies]
+test = ["pytest", "tox", "pytest-cov"]
