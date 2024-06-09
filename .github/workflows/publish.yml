@@ -28,6 +28,10 @@ jobs:
         prerelease: false
         tag_name: v${{ needs.set_version.outputs.version }}
         generate_release_notes: true
+    - name: Build and publish on private PyPI
+      run: |
+        python3.11 -m build
+#        twine upload dist/*
     - name: Upload .whl artifact to GitHub release
       uses: actions/upload-release-asset@v1
       env:
