@@ -6,6 +6,12 @@ API
 
 This part of the documentation covers all the interfaces of Flask-Utils
 
+Extension
+---------
+
+.. automodule:: flask_utils.extension
+    :members:
+
 Custom exceptions
 -----------------
 
@@ -42,3 +48,5 @@ Private API
 .. autofunction:: flask_utils.decorators._check_type
 
 .. autofunction:: flask_utils.errors._error_template._generate_error_json
+
+.. autofunction:: flask_utils.errors._register_error_handlers
