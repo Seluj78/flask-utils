@@ -6,3 +6,19 @@ codecov:
 
 fixes:
   - "::flask_utils/"
+
+component_management:
+  default_rules:
+    statuses:
+      - type: project
+        target: auto
+
+individual_components:
+  - component_id: module_decorators
+    name: decorators
+    paths:
+      - flask_utils/decorators.py
+  - component_id: module_errors
+    name: errors
+    paths:
+      - flask_utils/errors/**
