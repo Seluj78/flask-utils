@@ -4,7 +4,7 @@ from flask_utils.errors.base_class import _BaseFlaskException
 class NotFoundError(_BaseFlaskException):
     """This is the NotFoundError exception class.
 
-    When raised, it will return 400 status code with the message and solution provided.
+    When raised, it will return 404 status code with the message and solution provided.
 
     :param msg: The message to be displayed in the error.
     :param solution: The solution to the error.

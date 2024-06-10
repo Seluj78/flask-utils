@@ -49,7 +49,6 @@ def create_user():
 
 You can find the full documentation at [Read the Docs](https://flask-utils.readthedocs.io/en/latest/)
 
-
 ## Testing
 
 Install the requirements
@@ -79,7 +78,9 @@ tox -p
 - [ ] Move todo-list to GitHub issues
 - [ ] Badges
 - [ ] Automatic build/deployment (https://github.com/pypa/cibuildwheel)
+- [ ] [cibuildwheel](https://github.com/pypa/cibuildwheel)
 - [ ] https://github.com/PyCQA/flake8-bugbear
+- [ ] [flake8-bugbear](https://github.com/PyCQA/flake8-bugbear)
 - [ ] Versioning of docs in Read the Docs
 - [ ] Refactor documentation to avoid full links in docs (have `BadRequestError` instead of `flask_utils.errors.BadRequestError`)
 - [ ] Add usage examples to documentation in the Usage section
