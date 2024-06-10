@@ -45,6 +45,10 @@ def create_user():
     return "User created"
 ```
 
+## Documentation
+
+You can find the full documentation at [Read the Docs](https://flask-utils.readthedocs.io/en/latest/)
+
 
 ## Testing
 
@@ -77,3 +81,4 @@ tox -p
 - [ ] Badges
 - [ ] Automatic build/deployment (https://github.com/pypa/cibuildwheel)
 - [ ] https://github.com/PyCQA/flake8-bugbear
+- [ ] Versioning of docs in Read the Docs
