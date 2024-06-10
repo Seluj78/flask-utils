@@ -29,7 +29,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements-dev.txt
       - name: Lint with flake8
-        run: flake8 --max-line-length=120 . --exclude env,configuration,venv,src,scripts,.venv,e2e
+        run: |
+          flake8 --version # Verify flake8 is picking up flake8-bugbear
+          flake8 --max-line-length=120 . --exclude env,configuration,venv,src,scripts,.venv,e2e
 
   lint-black:
     name: Linting with black
