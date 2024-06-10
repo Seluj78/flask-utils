@@ -84,3 +84,9 @@ tox -p
 - [ ] Versioning of docs in Read the Docs
 - [ ] Refactor documentation to avoid full links in docs (have `BadRequestError` instead of `flask_utils.errors.BadRequestError`)
 - [ ] Add usage examples to documentation in the Usage section
+- [ ] (Automatic?) changelog
+- [ ] Add a CONTRIBUTING.md
+- [ ] Add a CODE_OF_CONDUCT.md
+- [ ] Add pull request template
+- [ ] Add issue template
+- https://sphinx-notfound-page.readthedocs.io/en/latest/
