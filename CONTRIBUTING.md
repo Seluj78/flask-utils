@@ -31,7 +31,7 @@ All types of contributions are encouraged and valued. See the [Table of Contents
 This project and everyone participating in it is governed by the
 [Flask-Utils Code of Conduct](https://github.com/Seluj78/flask-utilsblob/master/CODE_OF_CONDUCT.md).
 By participating, you are expected to uphold this code. Please report unacceptable behavior
-to <jules.lasne+conduct@gmail.com>.
+to `jules <dot> lasne <plus> conduct <at> gmail <dot> com`.
 
 
 ## I Have a Question
@@ -74,7 +74,7 @@ A good bug report shouldn't leave others needing to chase you up for more inform
 <!-- omit in toc -->
 #### How Do I Submit a Good Bug Report?
 
-> You must never report security related issues, vulnerabilities or bugs including sensitive information to the issue tracker, or elsewhere in public. Instead sensitive bugs must be sent by email to <jules.lasne+security@gmail.com>.
+> You must never report security related issues, vulnerabilities or bugs including sensitive information to the issue tracker, or elsewhere in public. Instead sensitive bugs must be sent by email to `jules <dot> lasne <plus> security <at> gmail <dot> com`.
 <!-- You may add a PGP key to allow the messages to be sent encrypted as well. -->
 
 We use GitHub issues to track bugs and errors. If you run into an issue with the project:
@@ -183,7 +183,7 @@ etc... We will let you know anyway if a commit is not following the guidelines.
 
 ## Join The Project Team
 
-If you are interested in becoming a member of the project team, please contact us at jules <dot> lasne <plus> flask-utils <at> gmail <dot> com.
+If you are interested in becoming a member of the project team, please contact us at `jules <dot> lasne <plus> flask-utils <at> gmail <dot> com`.
 
 ## Attribution
 This guide is based on the **contributing-gen**. [Make your own](https://github.com/bttger/contributing-gen)!
