@@ -24,7 +24,8 @@ extensions = [
     "sphinx.ext.autosummary",
     "sphinx.ext.intersphinx",
     "sphinx.ext.viewcode",
-    "notfound.extension",
+    # notfound causes a bug with the flask theme, see https://github.com/readthedocs/sphinx-notfound-page/issues/148
+    # "notfound.extension",
     "pallets_sphinx_themes",
 ]
 
