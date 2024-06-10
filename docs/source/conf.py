@@ -25,6 +25,7 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx.ext.viewcode",
     "notfound.extension",
+    "pallets_sphinx_themes",
 ]
 
 autodoc_default_options = {
@@ -43,7 +44,7 @@ templates_path = ["_templates"]
 
 # -- Options for HTML output
 
-html_theme = "sphinx_rtd_theme"
+html_theme = "flask"
 
 # -- Options for EPUB output
 epub_show_urls = "footnote"

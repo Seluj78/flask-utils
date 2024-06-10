@@ -13,8 +13,8 @@ from werkzeug.exceptions import UnsupportedMediaType
 
 from flask_utils.errors import BadRequestError
 
-# TODO: Turn flask-utils into a class that registers the app (like Flask-Cors for example)
-#  and the error handlers optionally, that way we can either use BadRequestError or just return a 400
+# TODO: Change validate_params to either use BadRequestError or just return a 400 depending
+#  on if the error handler is registered or not in the FlaskUtils class
 
 VALIDATE_PARAMS_MAX_DEPTH = 4
 

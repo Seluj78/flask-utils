@@ -1,5 +1,5 @@
 # Increment versions here according to SemVer
-__version__ = "0.4.0"
+__version__ = "0.5.0"
 
 from flask_utils.errors import ConflictError
 from flask_utils.errors import ForbiddenError
@@ -14,10 +14,9 @@ from flask_utils.errors import UnprocessableEntityError
 from flask_utils.errors import ServiceUnavailableError
 
 from flask_utils.decorators import validate_params
-
 from flask_utils.utils import is_it_true
 
-from flask_utils.errors import register_error_handlers
+from flask_utils.extension import FlaskUtils
 
 __all__ = [
     "ConflictError",
@@ -25,7 +24,6 @@ __all__ = [
     "UnauthorizedError",
     "NotFoundError",
     "BadRequestError",
-    "register_error_handlers",
     "FailedDependencyError",
     "OriginIsUnreachableError",
     "WebServerIsDownError",
@@ -34,4 +32,5 @@ __all__ = [
     "ServiceUnavailableError",
     "validate_params",
     "is_it_true",
+    "FlaskUtils",
 ]

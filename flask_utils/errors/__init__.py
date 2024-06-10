@@ -15,12 +15,32 @@ from flask_utils.errors.unprocessableentity import UnprocessableEntityError
 from flask_utils.errors.web_server_is_down import WebServerIsDownError
 
 
-def register_error_handlers(application: Flask) -> None:
+def _register_error_handlers(application: Flask) -> None:
     """
     This function will register all the error handlers for the application
 
     :param application: The Flask application to register the error handlers
     :return: None
+
+    .. versionchanged:: 0.5.0
+        Made the function private. If you want to register the custom error handlers, you need to
+            pass `register_error_handlers=True` to the :class:`flask_utils.extension.FlaskUtils` class
+            or to :meth:`flask_utils.extension.FlaskUtils.init_app`
+
+        .. code-block:: python
+
+            from flask import Flask
+            from flask_utils import FlaskUtils
+
+            app = Flask(__name__)
+            utils = FlaskUtils(app)
+
+            # OR
+
+            utils = FlaskUtils()
+            utils.init_app(app)
+
+    .. versionadded:: 0.1.0
     """
 
     @application.errorhandler(BadRequestError)
@@ -168,5 +188,5 @@ __all__ = [
     "GoneError",
     "UnprocessableEntityError",
     "ServiceUnavailableError",
-    "register_error_handlers",
+    "_register_error_handlers",
 ]
