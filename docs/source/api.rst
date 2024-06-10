@@ -27,6 +27,12 @@ Decorators
 .. automodule:: flask_utils.decorators
     :members:
 
+Utilities
+---------
+
+.. automodule:: flask_utils.utils
+    :members:
+
 Private API
 ----------------------
 
