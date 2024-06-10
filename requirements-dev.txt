@@ -1,10 +1,12 @@
 -r requirements.txt
 black
+coverage
 flake8
 mypy
 packaging
 pre-commit
 pytest
+pytest-cov
 pytest-flask
 reorder-python-imports
 sphinx-lint

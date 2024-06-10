@@ -4,6 +4,7 @@
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/seluj78/flask-utils/tests.yml?label=tests)
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/seluj78/flask-utils/linting.yml?label=linting)
 ![GitHub License](https://img.shields.io/github/license/seluj78/flask-utils)
+[![codecov](https://codecov.io/gh/Seluj78/flask-utils/graph/badge.svg?token=ChUOweAp4b)](https://codecov.io/gh/Seluj78/flask-utils)
 
 [//]: # (TODO: Uncomment when flask-utils had been freed from pypi)
 [//]: # (![PyPI - Downloads]&#40;https://img.shields.io/pypi/dm/flask-utils&#41;)
