@@ -1,9 +1,43 @@
-from flask_utils.errors.base_class import BaseFlaskException
+from flask_utils.errors.base_class import _BaseFlaskException
 
 
-class NotFoundError(BaseFlaskException):
-    """
-    This is the NotFoundError class for the Exception.
+class NotFoundError(_BaseFlaskException):
+    """This is the NotFoundError exception class.
+
+    When raised, it will return 400 status code with the message and solution provided.
+
+    :param msg: The message to be displayed in the error.
+    :param solution: The solution to the error.
+
+    :Example:
+
+    .. code-block:: python
+
+            from flask_utils.errors import NotFoundError
+
+            # Inside a Flask route
+            @app.route('/example', methods=['POST'])
+            def example_route():
+                ...
+                if some_condition:
+                    raise NotFoundError("This is a not found error.")
+
+    The above code would return the following JSON response from Flask:
+
+    .. code-block:: json
+
+        {
+            "success": false,
+            "error": {
+                "type": "NotFoundError",
+                "name": "Not Found",
+                "message": "This is a not found error.",
+                "solution": "Try again."
+            },
+            "code": 404
+        }
+
+    .. versionadded:: 0.1.0
     """
 
     def __init__(self, msg: str, solution: str = "Try again.") -> None:
