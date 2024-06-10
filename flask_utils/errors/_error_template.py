@@ -1,16 +1,35 @@
 from flask import jsonify
 from flask import Response
 
-from flask_utils.errors.base_class import BaseFlaskException
+from flask_utils.errors.base_class import _BaseFlaskException
 
 
-def generate_error_json(error: BaseFlaskException, status_code: int) -> Response:
+def _generate_error_json(error: _BaseFlaskException, status_code: int) -> Response:
     """
     This function is used to generate a json of the error passed
 
     :param error: The error containing the message and solution
     :param status_code: The status code of the error.
     :return: Returns a json containing all the info
+
+    :Example:
+
+    .. code-block:: python
+
+        from flask_utils.errors import _BaseFlaskException
+        from flask_utils.errors._error_template import _generate_error_json
+
+        class MyError(_BaseFlaskException):
+            self.name = "MyError"
+            self.msg = msg
+            self.solution = solution
+            self.status_code = 666
+
+        error = MyError("This is an error", "This is the solution")
+
+        json = _generate_error_json(error, 666)
+
+    .. versionadded:: 0.1.0
     """
     success = False
     json = {

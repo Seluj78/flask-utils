@@ -1,5 +1,5 @@
 # Increment versions here according to SemVer
-__version__ = "0.2.4"
+__version__ = "0.2.5"
 
 from flask_utils.errors import ConflictError
 from flask_utils.errors import ForbiddenError
