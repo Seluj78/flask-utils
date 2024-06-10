@@ -1,4 +1,17 @@
 [![Documentation Status](https://readthedocs.org/projects/flask-utils/badge/?version=latest)](https://flask-utils.readthedocs.io/en/latest/?badge=latest)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/Seluj78/flask-utils)
+![GitHub commits since latest release](https://img.shields.io/github/commits-since/seluj78/flask-utils/latest)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/seluj78/flask-utils/tests.yml?label=tests)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/seluj78/flask-utils/linting.yml?label=linting)
+![GitHub License](https://img.shields.io/github/license/seluj78/flask-utils)
+
+[//]: # (TODO: Uncomment when flask-utils had been freed from pypi)
+[//]: # (![PyPI - Downloads]&#40;https://img.shields.io/pypi/dm/flask-utils&#41;)
+[//]: # (![PyPI - Implementation]&#40;https://img.shields.io/pypi/implementation/flask-utils&#41;)
+[//]: # (![PyPI - Python Version]&#40;https://img.shields.io/pypi/pyversions/flask-utils&#41;)
+[//]: # (![PyPI - Versions from Framework Classifiers]&#40;https://img.shields.io/pypi/frameworkversions/:frameworkName/flask-utils&#41;)
+[//]: # (![PyPI - Wheel]&#40;https://img.shields.io/pypi/wheel/flask-utils&#41;)
+[//]: # (![PyPI - Version]&#40;https://img.shields.io/pypi/v/flask-utils&#41;)
 
 # Flask-Utils
 
