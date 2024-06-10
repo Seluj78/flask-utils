@@ -23,7 +23,14 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
     "sphinx.ext.intersphinx",
+    "sphinx.ext.viewcode",
 ]
+
+autodoc_default_options = {
+    "members": True,
+    "undoc-members": True,
+    "private-members": False,
+}
 
 intersphinx_mapping = {
     "python": ("https://docs.python.org/3/", None),
