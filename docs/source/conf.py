@@ -49,3 +49,5 @@ html_theme = "flask"
 
 # -- Options for EPUB output
 epub_show_urls = "footnote"
+
+add_module_names = False
