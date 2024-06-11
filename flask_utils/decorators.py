@@ -186,7 +186,7 @@ def validate_params(
                        and the values are the expected types.
     :param allow_empty: Allow empty values for parameters. Defaults to False.
 
-    :raises flask_utils.errors.badrequest.BadRequestError: If the JSON body is malformed,
+    :raises BadRequestError: If the JSON body is malformed,
         the Content-Type header is missing or incorrect, required parameters are missing,
         or parameters are of the wrong type.
 

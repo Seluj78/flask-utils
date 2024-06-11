@@ -24,8 +24,8 @@ def _register_error_handlers(application: Flask) -> None:
 
     .. versionchanged:: 0.5.0
         Made the function private. If you want to register the custom error handlers, you need to
-            pass `register_error_handlers=True` to the :class:`flask_utils.extension.FlaskUtils` class
-            or to :meth:`flask_utils.extension.FlaskUtils.init_app`
+            pass `register_error_handlers=True` to the :class:`FlaskUtils` class
+            or to :meth:`FlaskUtils.init_app`
 
         .. code-block:: python
 
