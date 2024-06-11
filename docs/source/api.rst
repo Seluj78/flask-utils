@@ -16,7 +16,7 @@ Custom exceptions
 -----------------
 
 .. warning:: For any of these errors to work, you need to register the error handlers in your Flask app.
-    To do this, you can call :meth:`flask_utils.errors.register_error_handlers` with your Flask app as an argument.
+    To do this, you can call :meth:`register_error_handlers` with your Flask app as an argument.
 
     .. code-block:: python
 
