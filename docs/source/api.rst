@@ -16,12 +16,21 @@ Custom exceptions
 -----------------
 
 .. warning:: For any of these errors to work, you need to register the error handlers in your Flask app.
-    To do this, you can call :meth:`register_error_handlers` with your Flask app as an argument.
+
+    To do this, you need to pass :attr:`register_error_handlers=True` to the :class:`FlaskUtils` class or to :meth:`~FlaskUtils.init_app()`.
 
     .. code-block:: python
+        
+        from flask import Flask
+        from flask_utils import FlaskUtils
+        
+        app = Flask(__name__)
+        utils = FlaskUtils(app, register_error_handlers=True)
 
-        from flask_utils import register_error_handlers
-        register_error_handlers(app)
+        # OR
+
+        utils = FlaskUtils()
+        utils.init_app(app, register_error_handlers=True)
 
 .. automodule:: flask_utils.errors
      :members:
