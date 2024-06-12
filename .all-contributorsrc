@@ -5,6 +5,23 @@
   "skipCi": true,
   "contributors": [
     {
+      "login": "Seluj78",
+      "name": "Jules Lasne",
+      "avatar_url": "https://avatars.githubusercontent.com/u/4641317?v=4",
+      "profile": "https://juleslasne.com",
+      "contributions": [
+        "code",
+        "doc",
+        "infra",
+        "example",
+        "mentoring",
+        "platform",
+        "projectManagement",
+        "review",
+        "tutorial"
+      ]
+    },
+    {
       "login": "Mews",
       "name": "Mews",
       "avatar_url": "https://avatars.githubusercontent.com/u/60406199?v=4",
