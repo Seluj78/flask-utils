@@ -29,12 +29,11 @@ pip install flask-utils
 
 ```python
 from flask import Flask
-from flask_utils import register_error_handlers
+from flask_utils import FlaskUtils
 from flask_utils import BadRequestError
 
 app = Flask(__name__)
-
-register_error_handlers(app)
+utils = FlaskUtils(app, register_error_handlers=True)
 
 @app.route('/')
 def index():
