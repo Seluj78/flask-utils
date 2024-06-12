@@ -1,7 +1,23 @@
 {
   "projectName": "flask-utils",
-  "projectOwner": "seluj78",
+  "projectOwner": "Seluj78",
   "linkToUsage": true,
   "skipCi": true,
-  "contributors": []
+  "contributors": [
+    {
+      "login": "Mews",
+      "name": "Mews",
+      "avatar_url": "https://avatars.githubusercontent.com/u/60406199?v=4",
+      "profile": "https://github.com/Mews",
+      "contributions": [
+        "doc"
+      ]
+    }
+  ],
+  "files": [
+    "README.md"
+  ],
+  "commitType": "docs",
+  "commitConvention": "angular",
+  "contributorsPerLine": 7
 }
