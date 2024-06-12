@@ -96,8 +96,8 @@ tox -p
 <table>
   <tbody>
     <tr>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Mews"><img src="https://avatars.githubusercontent.com/u/60406199?v=4?s=100" width="100px;" alt="Mews"/><br /><sub><b>Mews</b></sub></a><br /><a href="#doc-Mews" title="Documentation">📖</a> <a href="#tutorial-Mews" title="Tutorials">✅</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://juleslasne.com"><img src="https://avatars.githubusercontent.com/u/4641317?v=4?s=100" width="100px;" alt="Jules Lasne"/><br /><sub><b>Jules Lasne</b></sub></a><br /><a href="#code-Seluj78" title="Code">💻</a> <a href="#doc-Seluj78" title="Documentation">📖</a> <a href="#infra-Seluj78" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#example-Seluj78" title="Examples">💡</a> <a href="#mentoring-Seluj78" title="Mentoring">🧑‍🏫</a> <a href="#platform-Seluj78" title="Packaging/porting to new platform">📦</a> <a href="#projectManagement-Seluj78" title="Project Management">📆</a> <a href="#review-Seluj78" title="Reviewed Pull Requests">👀</a> <a href="#tutorial-Seluj78" title="Tutorials">✅</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Mews"><img src="https://avatars.githubusercontent.com/u/60406199?v=4?s=100" width="100px;" alt="Mews"/><br /><sub><b>Mews</b></sub></a><br /><a href="#doc-Mews" title="Documentation">📖</a> <a href="#tutorial-Mews" title="Tutorials">✅</a></td>
     </tr>
   </tbody>
   <tfoot>
