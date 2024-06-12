@@ -4,6 +4,7 @@
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/seluj78/flask-utils/tests.yml?label=tests)
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/seluj78/flask-utils/linting.yml?label=linting)
 ![GitHub License](https://img.shields.io/github/license/seluj78/flask-utils)
+[![All Contributors](https://img.shields.io/github/all-contributors/seluj78/flask-utils?color=ee8449&style=flat-square)](#contributors)
 [![codecov](https://codecov.io/gh/Seluj78/flask-utils/graph/badge.svg?token=ChUOweAp4b)](https://codecov.io/gh/Seluj78/flask-utils)
 
 [//]: # (TODO: Uncomment when flask-utils had been freed from pypi)
@@ -86,3 +87,15 @@ Run the tests multi-threaded
 ```bash
 tox -p
 ```
+
+
+## Contributors
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
