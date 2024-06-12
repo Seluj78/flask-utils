@@ -20,10 +20,10 @@ Custom exceptions
     To do this, you need to pass :attr:`register_error_handlers=True` to the :class:`~flask_utils.extension.FlaskUtils` class or to :meth:`~flask_utils.extension.FlaskUtils.init_app()`.
 
     .. code-block:: python
-        
+
         from flask import Flask
         from flask_utils import FlaskUtils
-        
+
         app = Flask(__name__)
         utils = FlaskUtils(app, register_error_handlers=True)
 
