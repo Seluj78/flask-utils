@@ -1,8 +1,8 @@
 from functools import wraps
 from typing import Any
-from typing import Dict
 from typing import get_args
 from typing import get_origin
+from typing import get_type_hints
 from typing import Optional
 from typing import Type
 from typing import Union
@@ -173,7 +173,6 @@ def _check_type(value: Any, expected_type: Type, allow_empty: bool = False, curr
 
 
 def validate_params(
-    parameters: Dict[Any, Any],
     allow_empty: bool = False,
 ):
     """
@@ -241,6 +240,14 @@ def validate_params(
     def decorator(fn):
         @wraps(fn)
         def wrapper(*args, **kwargs):
+
+            # Load expected parameter types from function type hints
+            parameters = get_type_hints(fn)
+
+            # Remove return value type hints
+            if "return" in parameters.keys():
+                del parameters["return"]
+
             try:
                 data = request.get_json()
             except BadRequest:
@@ -270,6 +277,13 @@ def validate_params(
             for key in data:
                 if key in parameters and not _check_type(data[key], parameters[key], allow_empty):
                     raise BadRequestError(f"Wrong type for key {key}.", f"It should be {parameters[key]}")
+
+            for key in parameters:
+                if _is_optional(parameters[key]) and key not in data:
+                    kwargs[key] = None
+
+                else:
+                    kwargs[key] = data[key]
 
             return fn(*args, **kwargs)
 
