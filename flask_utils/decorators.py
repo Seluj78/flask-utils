@@ -245,7 +245,7 @@ def validate_params(
             parameters = get_type_hints(fn)
 
             # Remove return value type hints
-            if "return" in parameters.keys():
+            if "return" in parameters:
                 del parameters["return"]
 
             try:
