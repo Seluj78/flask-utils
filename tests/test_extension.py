@@ -1,7 +1,7 @@
 from flask import Flask
 
-from flask_utils import BadRequestError
 from flask_utils import FlaskUtils
+from flask_utils import BadRequestError
 
 
 class TestExtension:

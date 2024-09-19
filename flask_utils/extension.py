@@ -37,7 +37,7 @@ class FlaskUtils(object):
         if app is not None:
             self.init_app(app, register_error_handlers)
 
-    def init_app(self, app: Flask, register_error_handlers: bool = True):
+    def init_app(self, app: Flask, register_error_handlers: bool = True) -> None:
         """Initialize a Flask application for use with this extension instance. This
         must be called before any request is handled by the application.
 

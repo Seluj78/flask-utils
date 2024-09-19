@@ -1,16 +1,16 @@
 import pytest
 
-from flask_utils.errors.badrequest import BadRequestError
-from flask_utils.errors.conflict import ConflictError
-from flask_utils.errors.failed_dependency import FailedDependencyError
-from flask_utils.errors.forbidden import ForbiddenError
 from flask_utils.errors.gone import GoneError
+from flask_utils.errors.conflict import ConflictError
 from flask_utils.errors.notfound import NotFoundError
-from flask_utils.errors.origin_is_unreachable import OriginIsUnreachableError
-from flask_utils.errors.service_unavailable import ServiceUnavailableError
+from flask_utils.errors.forbidden import ForbiddenError
+from flask_utils.errors.badrequest import BadRequestError
 from flask_utils.errors.unauthorized import UnauthorizedError
-from flask_utils.errors.unprocessableentity import UnprocessableEntityError
+from flask_utils.errors.failed_dependency import FailedDependencyError
 from flask_utils.errors.web_server_is_down import WebServerIsDownError
+from flask_utils.errors.service_unavailable import ServiceUnavailableError
+from flask_utils.errors.unprocessableentity import UnprocessableEntityError
+from flask_utils.errors.origin_is_unreachable import OriginIsUnreachableError
 
 
 @pytest.fixture(autouse=True)

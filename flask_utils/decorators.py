@@ -1,11 +1,12 @@
-from functools import wraps
 from typing import Any
 from typing import Dict
-from typing import get_args
-from typing import get_origin
-from typing import Optional
 from typing import Type
 from typing import Union
+from typing import Callable
+from typing import Optional
+from typing import get_args
+from typing import get_origin
+from functools import wraps
 
 from flask import request
 from werkzeug.exceptions import BadRequest
@@ -19,7 +20,7 @@ from flask_utils.errors import BadRequestError
 VALIDATE_PARAMS_MAX_DEPTH = 4
 
 
-def _is_optional(type_hint: Type) -> bool:
+def _is_optional(type_hint: Type) -> bool:  # type: ignore
     """Check if the type hint is :data:`~typing.Optional`.
 
     :param type_hint: Type hint to check.
@@ -40,7 +41,7 @@ def _is_optional(type_hint: Type) -> bool:
     return get_origin(type_hint) is Union and type(None) in get_args(type_hint)
 
 
-def _make_optional(type_hint: Type) -> Type:
+def _make_optional(type_hint: Type) -> Type:  # type: ignore
     """Wrap type hint with :data:`~typing.Optional` if it's not already.
 
     :param type_hint: Type hint to wrap.
@@ -63,7 +64,7 @@ def _make_optional(type_hint: Type) -> Type:
     return type_hint
 
 
-def _is_allow_empty(value: Any, type_hint: Type, allow_empty: bool) -> bool:
+def _is_allow_empty(value: Any, type_hint: Type, allow_empty: bool) -> bool:  # type: ignore
     """Determine if the value is considered empty and whether it's allowed.
 
     :param value: Value to check.
@@ -96,7 +97,7 @@ def _is_allow_empty(value: Any, type_hint: Type, allow_empty: bool) -> bool:
     return False
 
 
-def _check_type(value: Any, expected_type: Type, allow_empty: bool = False, curr_depth: int = 0) -> bool:
+def _check_type(value: Any, expected_type: Type, allow_empty: bool = False, curr_depth: int = 0) -> bool:  # type: ignore
     """Check if the value matches the expected type, recursively if necessary.
 
     :param value: Value to check.
@@ -139,11 +140,11 @@ def _check_type(value: Any, expected_type: Type, allow_empty: bool = False, curr
 
     if curr_depth >= VALIDATE_PARAMS_MAX_DEPTH:
         return True
-    if expected_type is Any or _is_allow_empty(value, expected_type, allow_empty):
+    if expected_type is Any or _is_allow_empty(value, expected_type, allow_empty):  # type: ignore
         return True
 
     if isinstance(value, bool):
-        if expected_type is bool or expected_type is Optional[bool]:
+        if expected_type is bool or expected_type is Optional[bool]:  # type: ignore
             return True
         if get_origin(expected_type) is Union:
             return any(arg is bool for arg in get_args(expected_type))
@@ -175,7 +176,7 @@ def _check_type(value: Any, expected_type: Type, allow_empty: bool = False, curr
 def validate_params(
     parameters: Dict[Any, Any],
     allow_empty: bool = False,
-):
+) -> Callable:  # type: ignore
     """
     Decorator to validate request JSON body parameters.
 
@@ -238,17 +239,17 @@ def validate_params(
     .. versionadded:: 0.2.0
     """
 
-    def decorator(fn):
+    def decorator(fn):  # type: ignore
         @wraps(fn)
-        def wrapper(*args, **kwargs):
+        def wrapper(*args, **kwargs):  # type: ignore
             try:
                 data = request.get_json()
-            except BadRequest:
-                raise BadRequestError("The Json Body is malformed.")
-            except UnsupportedMediaType:
+            except BadRequest as e:
+                raise BadRequestError("The Json Body is malformed.") from e
+            except UnsupportedMediaType as e:
                 raise BadRequestError(
                     "The Content-Type header is missing or is not set to application/json, or the JSON body is missing."
-                )
+                ) from e
 
             if not data:
                 raise BadRequestError("Missing json body.")

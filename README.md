@@ -65,26 +65,21 @@ You can find the full documentation at [Read the Docs](https://flask-utils.readt
 
 ## Testing
 
-Install the requirements
+Install uv
 ```bash
-pip install -r requirements-dev.txt
-```
-
-Make sure tox is at the latest version
-```bash
-pip install --upgrade tox
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
 Run the tests
 ```bash
-tox
+uv run tox
 ```
 
 OR
 
-Run the tests multi-threaded
+Run the tests in a multithreaded fashion
 ```bash
-tox -p
+uv run tox -p
 ```
 
 

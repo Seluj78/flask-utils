@@ -10,14 +10,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - name: Set up Python
-      uses: actions/setup-python@v5
+    - name: Install uv
+      uses: astral-sh/setup-uv@v2
       with:
-        python-version: '3.11'
-    - name: Install dependencies
-      run: |
-        python3.11 -m pip install --upgrade pip
-        python3.11 -m pip install --upgrade setuptools wheel twine build
+        enable-cache: true
+        cache-dependency-glob: "uv.lock"
+    - name: Setup Python
+      run: uv python install
     - name: Create Github Release
       id: create_release
       uses: softprops/action-gh-release@v2
@@ -28,8 +27,9 @@ jobs:
         generate_release_notes: true
     - name: Build and publish on private PyPI
       run: |
-        python3.11 -m build
-#        twine upload dist/*
+        uv build
+        # TODO: Uncomment when flask-utils had been freed from pypi
+        # uvx twine upload dist/*
     - name: Upload .whl artifact to GitHub release
       uses: actions/upload-release-asset@v1
       env:
