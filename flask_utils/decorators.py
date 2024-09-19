@@ -1,3 +1,4 @@
+import inspect
 from functools import wraps
 from typing import Any
 from typing import get_args
@@ -13,9 +14,13 @@ from werkzeug.exceptions import UnsupportedMediaType
 
 from flask_utils.errors import BadRequestError
 
+
 # TODO: Change validate_params to either use BadRequestError or just return a 400 depending
 #  on if the error handler is registered or not in the FlaskUtils class
 
+
+# Should we keep this ? Or decide for a better depth at least, thinking through it.
+#  The max depth could also be a parameter of the FlaskUtils flask extension.
 VALIDATE_PARAMS_MAX_DEPTH = 4
 
 
@@ -181,7 +186,7 @@ def validate_params(
     This decorator ensures that the JSON body of a request matches the specified
     parameter types and includes all required parameters.
 
-    :param parameters: Dictionary of parameters to validate. The keys are parameter names
+     :param parameters: Dictionary of parameters to validate. The keys are parameter names
                        and the values are the expected types.
     :param allow_empty: Allow empty values for parameters. Defaults to False.
 
@@ -250,12 +255,17 @@ def validate_params(
 
             try:
                 data = request.get_json()
-            except BadRequest:
-                raise BadRequestError("The Json Body is malformed.")
-            except UnsupportedMediaType:
+            except BadRequest as e:
+                raise BadRequestError("The Json Body is malformed.") from e
+            except UnsupportedMediaType as e:
                 raise BadRequestError(
                     "The Content-Type header is missing or is not set to application/json, or the JSON body is missing."
-                )
+                ) from e
+            except RuntimeError:
+                sig = inspect.signature(fn)
+                bound_args = sig.bind(*args, **kwargs)
+                bound_args.apply_defaults()  # Not sure about applying the defaults here
+                data = {name: value for name, value in bound_args.arguments.items()}
 
             if not data:
                 raise BadRequestError("Missing json body.")
@@ -278,12 +288,12 @@ def validate_params(
                 if key in parameters and not _check_type(data[key], parameters[key], allow_empty):
                     raise BadRequestError(f"Wrong type for key {key}.", f"It should be {parameters[key]}")
 
-            for key in parameters:
-                if _is_optional(parameters[key]) and key not in data:
-                    kwargs[key] = None
-
-                else:
-                    kwargs[key] = data[key]
+            # for key in parameters:
+            #     if _is_optional(parameters[key]) and key not in data:
+            #         kwargs[key] = None
+            #
+            #     else:
+            #         kwargs[key] = data[key]
 
             return fn(*args, **kwargs)
 
