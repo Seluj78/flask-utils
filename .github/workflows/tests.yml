@@ -33,4 +33,4 @@ jobs:
       run: |
         export PYTHON_VERSION=${{ matrix.python-version }}
         export TOX_ENV=`uv run tox --listenvs | grep "py${PYTHON_VERSION//./}-" | tr '\n' ','`
-        uv run tox -e $TOX_ENV
+        uv run --python ${{ matrix.python-version }} tox -e $TOX_ENV
