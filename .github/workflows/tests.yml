@@ -31,6 +31,6 @@ jobs:
 
     - name: Run tests
       run: |
-        PYTHON_VERSION=${{ matrix.python-version }}
-        TOX_ENV=`tox --listenvs | grep "py${PYTHON_VERSION//./}-" | tr '\n' ','`
+        export PYTHON_VERSION=${{ matrix.python-version }}
+        export TOX_ENV=`tox --listenvs | grep "py${PYTHON_VERSION//./}-" | tr '\n' ','`
         uv run tox -e $TOX_ENV
