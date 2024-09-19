@@ -49,8 +49,8 @@ dev-dependencies = [
 
 
 [tool.black]
-line-length = 119
-target-version = ['py311']
+line-length = 120
+target-version = ['py38']
 include = '\.pyi?$'
 exclude = '''
 /(
@@ -73,7 +73,7 @@ exclude = '''
 '''
 
 [tool.mypy]
-python_version = "3.11"
+python_version = "3.8"
 warn_unused_configs = true
 ignore_missing_imports = false
 disallow_untyped_defs = true
@@ -139,7 +139,7 @@ line-length = 120
 indent-width = 4
 
 # Assume Python 3.8
-target-version = "py311"
+target-version = "py38"
 
 [tool.ruff.lint]
 # Enable Pyflakes (`F`) and a subset of the pycodestyle (`E`)  codes by default.
