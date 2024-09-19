@@ -17,7 +17,7 @@ Custom exceptions
 
 .. warning:: For any of these errors to work, you need to register the error handlers in your Flask app.
 
-    To do this, you need to pass :attr:`register_error_handlers=True` to the :class:`~flask_utils.extension.FlaskUtils` class or to :meth:`~flask_utils.extension.FlaskUtils.init_app()`.
+    To do this, you need to pass :attr:`register_error_handlers=True` to the :class:`~flask_utils.extension.FlaskUtils` class or to :meth:`~flask_utils.extension.FlaskUtils.init_app`.
 
     .. code-block:: python
 

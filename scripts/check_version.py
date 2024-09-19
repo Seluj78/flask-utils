@@ -3,7 +3,6 @@ import subprocess
 
 from packaging import version
 
-
 with open("flask_utils/__init__.py", "r") as file:
     content = file.read()
 
