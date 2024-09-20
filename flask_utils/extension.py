@@ -34,21 +34,30 @@ class FlaskUtils(object):
     """
 
     def __init__(self, app: Optional[Flask] = None, register_error_handlers: bool = True):
+        self.has_error_handlers_registered = False
+
         if app is not None:
             self.init_app(app, register_error_handlers)
 
     def init_app(self, app: Flask, register_error_handlers: bool = True) -> None:
-        """Initialize a Flask application for use with this extension instance. This
+        """
+        :param app: The Flask application to initialize.
+        :param register_error_handlers: Register the custom error handlers. Default is ``True``.
+
+        Initialize a Flask application for use with this extension instance. This
         must be called before any request is handled by the application.
 
         If the app is created with the factory pattern, this should be called after the app
         is created to configure the extension.
 
-        If `register_error_handlers` is True, the custom error handlers will be registered and
-        can then be used in routes to raise errors.
+        If ``register_error_handlers`` is ``True``, the custom error handlers will be registered and
+        can then be used in routes to raise errors. This is enabled by default.
+        The decorator :func:`~flask_utils.decorators.validate_params` will also use the custom error handlers
+        if set to ``True``.
 
-        :param app: The Flask application to initialize.
-        :param register_error_handlers: Register the custom error handlers. Default is True.
+        .. versionchanged:: 0.7.0
+            Setting ``register_error_handlers`` to True will now enable using the custom error handlers
+            in the :func:`~flask_utils.decorators.validate_params`. decorator.
 
         :Example:
 
@@ -65,5 +74,6 @@ class FlaskUtils(object):
         """
         if register_error_handlers:
             _register_error_handlers(app)
+            self.has_error_handlers_registered = True
 
         app.extensions["flask_utils"] = self
