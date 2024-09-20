@@ -292,8 +292,9 @@ def validate_params(
 
             for key in data:
                 if key not in parameters:
-                    if use_error_handlers:
-                        raise BadRequestError(f"Unexpected key: {key}.", f"Expected keys are: {parameters.keys()}")
+                    return _handle_bad_request(
+                        use_error_handlers, f"Unexpected key: {key}.", f"Expected keys are: {parameters.keys()}"
+                    )
 
             for key in data:
                 if key in parameters and not _check_type(data[key], parameters[key], allow_empty):
