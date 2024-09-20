@@ -1,4 +1,4 @@
 flask>=2.2.0
 Pallets-Sphinx-Themes
-sphinx==7.1.2
+sphinx==8.0.2
 sphinx-notfound-page
