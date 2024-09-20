@@ -32,6 +32,8 @@ def _handle_bad_request(
         raise BadRequestError(message, solution) from original_exception
     else:
         error_response = {"error": message}
+        if solution:
+            error_response["solution"] = solution
         return make_response(jsonify(error_response), status_code)
 
 
@@ -287,19 +289,21 @@ def validate_params(
             for key, type_hint in parameters.items():
                 if not _is_optional(type_hint) and key not in data:
                     return _handle_bad_request(
-                        use_error_handlers, f"Missing key: {key}", f"Expected keys are: {parameters.keys()}"
+                        use_error_handlers, f"Missing key: {key}", f"Expected keys are: {list(parameters.keys())}"
                     )
 
             for key in data:
                 if key not in parameters:
                     return _handle_bad_request(
-                        use_error_handlers, f"Unexpected key: {key}.", f"Expected keys are: {parameters.keys()}"
+                        use_error_handlers, f"Unexpected key: {key}.", f"Expected keys are: {list(parameters.keys())}"
                     )
 
             for key in data:
                 if key in parameters and not _check_type(data[key], parameters[key], allow_empty):
                     return _handle_bad_request(
-                        use_error_handlers, f"Wrong type for key {key}.", f"It should be {parameters[key]}"
+                        use_error_handlers,
+                        f"Wrong type for key {key}.",
+                        f"It should be {getattr(parameters[key], '__name__', str(parameters[key]))}",
                     )
 
             return fn(*args, **kwargs)
