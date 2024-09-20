@@ -1,3 +1,5 @@
+from typing import Optional
+
 from flask_utils.errors.base_class import _BaseFlaskException
 
 
@@ -40,7 +42,7 @@ class ConflictError(_BaseFlaskException):
     .. versionadded:: 0.1.0
     """
 
-    def __init__(self, msg: str, solution: str = "Try again.") -> None:
+    def __init__(self, msg: str, solution: Optional[str] = "Try again.") -> None:
         self.name = "Conflict"
         self.msg = msg
         self.solution = solution

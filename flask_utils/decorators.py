@@ -8,6 +8,7 @@ from typing import get_args
 from typing import get_origin
 from functools import wraps
 
+from flask import Response
 from flask import jsonify
 from flask import request
 from flask import current_app
@@ -18,6 +19,20 @@ from werkzeug.exceptions import UnsupportedMediaType
 from flask_utils.errors import BadRequestError
 
 VALIDATE_PARAMS_MAX_DEPTH = 4
+
+
+def _handle_bad_request(
+    use_error_handlers: bool,
+    message: str,
+    solution: Optional[str] = None,
+    status_code: int = 400,
+    original_exception: Optional[Exception] = None,
+) -> Response:
+    if use_error_handlers:
+        raise BadRequestError(message, solution) from original_exception
+    else:
+        error_response = {"error": message}
+        return make_response(jsonify(error_response), status_code)
 
 
 def _is_optional(type_hint: Type) -> bool:  # type: ignore
@@ -246,115 +261,45 @@ def validate_params(
     def decorator(fn):  # type: ignore
         @wraps(fn)
         def wrapper(*args, **kwargs):  # type: ignore
-            use_error_handlers = False
-            if current_app.extensions.get("flask_utils") is not None:
-                if current_app.extensions["flask_utils"].has_error_handlers_registered:
-                    use_error_handlers = True
+            use_error_handlers = (
+                current_app.extensions.get("flask_utils") is not None
+                and current_app.extensions["flask_utils"].has_error_handlers_registered
+            )
 
             try:
                 data = request.get_json()
             except BadRequest as e:
-                if use_error_handlers:
-                    raise BadRequestError("The Json Body is malformed.") from e
-                else:
-                    return make_response(
-                        jsonify(
-                            {
-                                "error": "The Json Body is malformed.",
-                            }
-                        ),
-                        400,
-                    )
+                return _handle_bad_request(use_error_handlers, "The Json Body is malformed.", original_exception=e)
             except UnsupportedMediaType as e:
-                if use_error_handlers:
-                    raise BadRequestError(
-                        "The Content-Type header is missing or is not set to application/json, "
-                        "or the JSON body is missing."
-                    ) from e
-                else:
-                    return make_response(
-                        jsonify(
-                            {
-                                "error": "The Content-Type header is missing or is not set to application/json, "
-                                "or the JSON body is missing.",
-                            }
-                        ),
-                        400,
-                    )
+                return _handle_bad_request(
+                    use_error_handlers,
+                    "The Content-Type header is missing or is not set to application/json, "
+                    "or the JSON body is missing.",
+                    original_exception=e,
+                )
 
             if not data:
-                if use_error_handlers:
-                    raise BadRequestError("Missing json body.")
-                else:
-                    return make_response(
-                        jsonify(
-                            {
-                                "error": "Missing json body.",
-                            }
-                        ),
-                        400,
-                    )
+                return _handle_bad_request(use_error_handlers, "Missing json body.")
 
             if not isinstance(data, dict):
-                if use_error_handlers:
-                    raise BadRequestError("JSON body must be a dict")
-                else:
-                    return make_response(
-                        jsonify(
-                            {
-                                "error": "JSON body must be a dict",
-                            }
-                        ),
-                        400,
-                    )
+                return _handle_bad_request(use_error_handlers, "JSON body must be a dict")
 
             for key, type_hint in parameters.items():
                 if not _is_optional(type_hint) and key not in data:
-                    if use_error_handlers:
-                        raise BadRequestError(f"Missing key: {key}", f"Expected keys are: {parameters.keys()}")
-                    else:
-                        return make_response(
-                            jsonify(
-                                {
-                                    "error": f"Missing key: {key}",
-                                    "expected_keys": parameters.keys(),
-                                }
-                            ),
-                            400,
-                        )
+                    return _handle_bad_request(
+                        use_error_handlers, f"Missing key: {key}", f"Expected keys are: {parameters.keys()}"
+                    )
 
             for key in data:
                 if key not in parameters:
                     if use_error_handlers:
-                        raise BadRequestError(
-                            f"Unexpected key: {key}.",
-                            f"Expected keys are: {parameters.keys()}",
-                        )
-                    else:
-                        return make_response(
-                            jsonify(
-                                {
-                                    "error": f"Unexpected key: {key}.",
-                                    "expected_keys": parameters.keys(),
-                                }
-                            ),
-                            400,
-                        )
+                        raise BadRequestError(f"Unexpected key: {key}.", f"Expected keys are: {parameters.keys()}")
 
             for key in data:
                 if key in parameters and not _check_type(data[key], parameters[key], allow_empty):
-                    if use_error_handlers:
-                        raise BadRequestError(f"Wrong type for key {key}.", f"It should be {parameters[key]}")
-                    else:
-                        return make_response(
-                            jsonify(
-                                {
-                                    "error": f"Wrong type for key {key}.",
-                                    "expected_type": parameters[key],
-                                }
-                            ),
-                            400,
-                        )
+                    return _handle_bad_request(
+                        use_error_handlers, f"Wrong type for key {key}.", f"It should be {parameters[key]}"
+                    )
 
             return fn(*args, **kwargs)
 
