@@ -33,6 +33,21 @@ class FlaskUtils(object):
             fu = FlaskUtils()
             fu.init_app(app)
 
+    .. versionchanged:: 1.0.0
+        The :func:`~flask_utils.decorators.validate_params` decorator will now use the ``VALIDATE_PARAMS_MAX_DEPTH``
+        config variable to determine the maximum depth of the validation for dictionaries.
+
+        :Example:
+
+        .. code-block:: python
+
+            from flask import Flask
+            from flask_utils import FlaskUtils
+
+            app = Flask(__name__)
+            fu = FlaskUtils(app)
+            app.config["VALIDATE_PARAMS_MAX_DEPTH"] = 3
+
     .. versionadded:: 0.5.0
     """
 
@@ -107,3 +122,4 @@ class FlaskUtils(object):
             self.has_error_handlers_registered = True
 
         app.extensions["flask_utils"] = self
+        app.config.setdefault("VALIDATE_PARAMS_MAX_DEPTH", 4)

@@ -19,9 +19,6 @@ from werkzeug.exceptions import UnsupportedMediaType
 
 from flask_utils.errors import BadRequestError
 
-# TODO: Allow to set this value from the config/env
-VALIDATE_PARAMS_MAX_DEPTH = 4
-
 
 def _handle_bad_request(
     use_error_handlers: bool,
@@ -141,9 +138,10 @@ def _check_type(value: Any, expected_type: Type, curr_depth: int = 0) -> bool:  
 
     .. versionadded:: 0.2.0
     """
+    max_depth = current_app.config.get("VALIDATE_PARAMS_MAX_DEPTH", 4)
 
-    if curr_depth >= VALIDATE_PARAMS_MAX_DEPTH:
-        warnings.warn(f"Maximum depth of {VALIDATE_PARAMS_MAX_DEPTH} reached.", SyntaxWarning, stacklevel=2)
+    if curr_depth >= max_depth:
+        warnings.warn(f"Maximum depth of {max_depth} reached.", SyntaxWarning, stacklevel=2)
         return True
     if expected_type is Any or _is_allow_empty(value, expected_type):  # type: ignore
         return True

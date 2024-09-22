@@ -567,6 +567,22 @@ class TestMaxDepth:
             assert issubclass(w[-1].category, SyntaxWarning)
             assert "Maximum depth of 4 reached." in str(w[-1].message)
 
+    def test_change_max_depth(self, client, flask_client):
+        flask_client.config["VALIDATE_PARAMS_MAX_DEPTH"] = 1
+
+        with warnings.catch_warnings(record=True) as w:
+            client.post(
+                "/example",
+                json={
+                    "user_info": {
+                        "name": {"age": {"is_active": {"weight": {"hobbies": {"address": {"city": "New York City"}}}}}}
+                    }
+                },
+            )
+            assert len(w) == 1
+            assert issubclass(w[-1].category, SyntaxWarning)
+            assert "Maximum depth of 1 reached." in str(w[-1].message)
+
 
 class TestJSONOverridesRouteParams:
     @pytest.fixture(autouse=True)
