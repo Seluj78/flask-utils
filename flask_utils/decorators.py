@@ -1,5 +1,6 @@
+import inspect
+import warnings
 from typing import Any
-from typing import Dict
 from typing import Type
 from typing import Union
 from typing import Callable
@@ -17,8 +18,6 @@ from werkzeug.exceptions import BadRequest
 from werkzeug.exceptions import UnsupportedMediaType
 
 from flask_utils.errors import BadRequestError
-
-VALIDATE_PARAMS_MAX_DEPTH = 4
 
 
 def _handle_bad_request(
@@ -61,41 +60,13 @@ def _is_optional(type_hint: Type) -> bool:  # type: ignore
     return get_origin(type_hint) is Union and type(None) in get_args(type_hint)
 
 
-def _make_optional(type_hint: Type) -> Type:  # type: ignore
-    """Wrap type hint with :data:`~typing.Optional` if it's not already.
-
-    :param type_hint: Type hint to wrap.
-    :type type_hint: Type
-
-    :return: Type hint wrapped with :data:`~typing.Optional`.
-    :rtype: Type
-
-    :Example:
-
-    .. code-block:: python
-
-            from typing import Optional
-            from flask_utils.decorators import _make_optional
-
-            _make_optional(str)  # Optional[str]
-            _make_optional(Optional[str])  # Optional[str]
-
-    .. versionadded:: 0.2.0
-    """
-    if not _is_optional(type_hint):
-        return Optional[type_hint]  # type: ignore
-    return type_hint
-
-
-def _is_allow_empty(value: Any, type_hint: Type, allow_empty: bool) -> bool:  # type: ignore
+def _is_allow_empty(value: Any, type_hint: Type) -> bool:  # type: ignore
     """Determine if the value is considered empty and whether it's allowed.
 
     :param value: Value to check.
     :type value: Any
     :param type_hint: Type hint to check against.
     :type type_hint: Type
-    :param allow_empty: Whether to allow empty values.
-    :type allow_empty: bool
 
     :return: True if the value is empty and allowed, False otherwise.
     :rtype: bool
@@ -117,22 +88,20 @@ def _is_allow_empty(value: Any, type_hint: Type, allow_empty: bool) -> bool:  # 
 
     .. versionadded:: 0.2.0
     """
-    if value in [None, "", [], {}]:
-        # Check if type is explicitly Optional or allow_empty is True
-        if _is_optional(type_hint) or allow_empty:
+    if not value:
+        # Check if type is explicitly Optional
+        if _is_optional(type_hint):
             return True
     return False
 
 
-def _check_type(value: Any, expected_type: Type, allow_empty: bool = False, curr_depth: int = 0) -> bool:  # type: ignore
+def _check_type(value: Any, expected_type: Type, curr_depth: int = 0) -> bool:  # type: ignore
     """Check if the value matches the expected type, recursively if necessary.
 
     :param value: Value to check.
     :type value: Any
     :param expected_type: Expected type.
     :type expected_type: Type
-    :param allow_empty: Whether to allow empty values.
-    :type allow_empty: bool
     :param curr_depth: Current depth of the recursive check.
     :type curr_depth: int
 
@@ -169,10 +138,12 @@ def _check_type(value: Any, expected_type: Type, allow_empty: bool = False, curr
 
     .. versionadded:: 0.2.0
     """
+    max_depth = current_app.config.get("VALIDATE_PARAMS_MAX_DEPTH", 4)
 
-    if curr_depth >= VALIDATE_PARAMS_MAX_DEPTH:
+    if curr_depth >= max_depth:
+        warnings.warn(f"Maximum depth of {max_depth} reached.", SyntaxWarning, stacklevel=2)
         return True
-    if expected_type is Any or _is_allow_empty(value, expected_type, allow_empty):  # type: ignore
+    if expected_type is Any or _is_allow_empty(value, expected_type):  # type: ignore
         return True
 
     if isinstance(value, bool):
@@ -186,11 +157,9 @@ def _check_type(value: Any, expected_type: Type, allow_empty: bool = False, curr
     args = get_args(expected_type)
 
     if origin is Union:
-        return any(_check_type(value, arg, allow_empty, (curr_depth + 1)) for arg in args)
+        return any(_check_type(value, arg, (curr_depth + 1)) for arg in args)
     elif origin is list:
-        return isinstance(value, list) and all(
-            _check_type(item, args[0], allow_empty, (curr_depth + 1)) for item in value
-        )
+        return isinstance(value, list) and all(_check_type(item, args[0], (curr_depth + 1)) for item in value)
     elif origin is dict:
         key_type, val_type = args
         if not isinstance(value, dict):
@@ -198,28 +167,19 @@ def _check_type(value: Any, expected_type: Type, allow_empty: bool = False, curr
         for k, v in value.items():
             if not isinstance(k, key_type):
                 return False
-            if not _check_type(v, val_type, allow_empty, (curr_depth + 1)):
+            if not _check_type(v, val_type, (curr_depth + 1)):
                 return False
         return True
     else:
         return isinstance(value, expected_type)
 
 
-def validate_params(
-    parameters: Dict[Any, Any],
-    allow_empty: bool = False,
-) -> Callable:  # type: ignore
+def validate_params() -> Callable:  # type: ignore
     """
     Decorator to validate request JSON body parameters.
 
     This decorator ensures that the JSON body of a request matches the specified
     parameter types and includes all required parameters.
-
-    :param parameters: Dictionary of parameters to validate. The keys are parameter names
-                       and the values are the expected types.
-    :type parameters: Dict[Any, Any]
-    :param allow_empty: Allow empty values for parameters. Defaults to False.
-    :type allow_empty: bool
 
     :raises BadRequestError: If the JSON body is malformed,
         the Content-Type header is missing or incorrect, required parameters are missing,
@@ -232,21 +192,13 @@ def validate_params(
         from flask import Flask, request
         from typing import List, Dict
         from flask_utils.decorators import validate_params
-        from flask_utils.errors.badrequest import BadRequestError
+        from flask_utils.errors import BadRequestError
 
         app = Flask(__name__)
 
         @app.route("/example", methods=["POST"])
-        @validate_params(
-            {
-                "name": str,
-                "age": int,
-                "is_student": bool,
-                "courses": List[str],
-                "grades": Dict[str, int],
-            }
-        )
-        def example():
+        @validate_params()
+        def example(name: str, age: int, is_student: bool, courses: List[str], grades: Dict[str, int]):
             \"""
             This route expects a JSON body with the following:
                 - name: str
@@ -255,8 +207,8 @@ def validate_params(
                 - courses: list of str
                 - grades: dict with str keys and int values
             \"""
-            data = request.get_json()
-            return data
+            # Use the data in your route
+            ...
 
     .. tip::
         You can use any of the following types:
@@ -269,6 +221,37 @@ def validate_params(
             * Any
             * Optional
             * Union
+
+    .. warning::
+        If a parameter exists both in the route parameters and in the JSON body,
+        the value from the JSON body will override the route parameter. A warning
+        is issued when this occurs.
+
+        :Example:
+
+        .. code-block:: python
+
+            from flask import Flask, request
+            from typing import List, Dict
+            from flask_utils.decorators import validate_params
+            from flask_utils.errors import BadRequestError
+
+            app = Flask(__name__)
+
+            @app.route("/users/<int:user_id>", methods=["POST"])
+            @validate_params()
+            def create_user(user_id: int):
+                print(f"User ID: {user_id}")
+                return "User created"
+
+            ...
+
+            requests.post("/users/123", json={"user_id": 456})
+            # Output: User ID: 456
+
+    .. versionchanged:: 1.0.0
+        The decorator doesn't take any parameters anymore,
+        it loads the types and parameters from the function signature as well as the Flask route's slug parameters.
 
     .. versionchanged:: 0.7.0
         The decorator will now use the custom error handlers if ``register_error_handlers`` has been set to ``True``
@@ -296,32 +279,66 @@ def validate_params(
                     "or the JSON body is missing.",
                     original_exception=e,
                 )
-
-            if not data:
-                return _handle_bad_request(use_error_handlers, "Missing json body.")
-
             if not isinstance(data, dict):
-                return _handle_bad_request(use_error_handlers, "JSON body must be a dict")
+                return _handle_bad_request(
+                    use_error_handlers,
+                    "JSON body must be a dict",
+                    original_exception=BadRequestError("JSON body must be a dict"),
+                )
 
-            for key, type_hint in parameters.items():
-                if not _is_optional(type_hint) and key not in data:
+            signature = inspect.signature(fn)
+            parameters = signature.parameters
+            # Extract the parameter names and annotations
+            expected_params = {}
+            for name, param in parameters.items():
+                if param.annotation != inspect.Parameter.empty:
+                    expected_params[name] = param.annotation
+                else:
+                    warnings.warn(f"Parameter {name} has no type annotation.", SyntaxWarning, stacklevel=2)
+                    expected_params[name] = Any
+
+            request_data = request.view_args  # Flask route parameters
+            for key in data:
+                if key in request_data:
+                    warnings.warn(
+                        f"Parameter {key} is defined in both the route and the JSON body. "
+                        f"The JSON body will override the route parameter.",
+                        SyntaxWarning,
+                        stacklevel=2,
+                    )
+            request_data.update(data or {})
+
+            for key, type_hint in expected_params.items():
+                # TODO: Handle deeply nested types
+                if key not in request_data and not _is_optional(type_hint):
                     return _handle_bad_request(
-                        use_error_handlers, f"Missing key: {key}", f"Expected keys are: {list(parameters.keys())}"
+                        use_error_handlers, f"Missing key: {key}", f"Expected keys are: {list(expected_params.keys())}"
                     )
 
-            for key in data:
-                if key not in parameters:
+            for key in request_data:
+                if key not in expected_params:
                     return _handle_bad_request(
-                        use_error_handlers, f"Unexpected key: {key}.", f"Expected keys are: {list(parameters.keys())}"
+                        use_error_handlers,
+                        f"Unexpected key: {key}.",
+                        f"Expected keys are: {list(expected_params.keys())}",
                     )
 
-            for key in data:
-                if key in parameters and not _check_type(data[key], parameters[key], allow_empty):
+            for key, value in request_data.items():
+                if key in expected_params and not _check_type(value, expected_params[key]):
                     return _handle_bad_request(
                         use_error_handlers,
                         f"Wrong type for key {key}.",
-                        f"It should be {getattr(parameters[key], '__name__', str(parameters[key]))}",
+                        f"It should be {getattr(expected_params[key], '__name__', str(expected_params[key]))}",
                     )
+
+            provided_values = {}
+            for key in expected_params:
+                if not _is_optional(expected_params[key]):
+                    provided_values[key] = request_data[key]
+                else:
+                    provided_values[key] = request_data.get(key, None)
+
+            kwargs.update(provided_values)
 
             return fn(*args, **kwargs)
 

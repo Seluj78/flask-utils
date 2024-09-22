@@ -52,7 +52,6 @@ Private API
 ----------------------
 
 .. autofunction:: flask_utils.decorators._is_optional
-.. autofunction:: flask_utils.decorators._make_optional
 .. autofunction:: flask_utils.decorators._is_allow_empty
 .. autofunction:: flask_utils.decorators._check_type
 
