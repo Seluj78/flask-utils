@@ -34,10 +34,14 @@ autodoc_default_options = {
     "private-members": False,
 }
 
+
+# TODO: Make the flask intermapping work
 intersphinx_mapping = {
     "python": ("https://docs.python.org/3/", None),
     "sphinx": ("https://www.sphinx-doc.org/en/master/", None),
+    "flask": ("https://flask.palletsprojects.com/en/2.0.x/", None),
 }
+
 intersphinx_disabled_domains = ["std"]
 
 templates_path = ["_templates"]
