@@ -593,7 +593,8 @@ class TestJSONOverridesRouteParams:
             return f"{user_id}"
 
     def test_valid_request(self, client):
-        response = client.post("/users/123", json={"user_id": 456})
+        with warnings.catch_warnings(record=True):
+            response = client.post("/users/123", json={"user_id": 456})
         assert response.status_code == 200
         assert response.text == "456"
 
