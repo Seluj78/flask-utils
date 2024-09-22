@@ -292,8 +292,8 @@ class TestOptional:
             return "OK", 200
 
     def test_valid_request(self, client):
-        # response = client.post("/optional", json={"name": "John", "age": 25})
-        # assert response.status_code == 200
+        response = client.post("/optional", json={"name": "John", "age": 25})
+        assert response.status_code == 200
 
         response = client.post("/optional", json={"name": "John"})
         assert response.status_code == 200

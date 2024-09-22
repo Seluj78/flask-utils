@@ -92,7 +92,7 @@ def _is_allow_empty(value: Any, type_hint: Type) -> bool:  # type: ignore
     .. versionadded:: 0.2.0
     """
     if not value:
-        # Check if type is explicitly Optional or allow_empty is True
+        # Check if type is explicitly Optional
         if _is_optional(type_hint):
             return True
     return False
