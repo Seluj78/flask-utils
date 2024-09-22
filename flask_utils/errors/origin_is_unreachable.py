@@ -11,7 +11,7 @@ class OriginIsUnreachableError(_BaseFlaskException):
     :param msg: The message to be displayed in the error.
     :type msg: str
     :param solution: The solution to the error.
-    :type solution: str
+    :type solution: Optional[str]
 
     :Example:
 

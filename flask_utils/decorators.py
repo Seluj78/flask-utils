@@ -217,7 +217,9 @@ def validate_params(
 
     :param parameters: Dictionary of parameters to validate. The keys are parameter names
                        and the values are the expected types.
+    :type parameters: Dict[Any, Any]
     :param allow_empty: Allow empty values for parameters. Defaults to False.
+    :type allow_empty: bool
 
     :raises BadRequestError: If the JSON body is malformed,
         the Content-Type header is missing or incorrect, required parameters are missing,

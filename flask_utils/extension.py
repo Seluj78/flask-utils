@@ -13,7 +13,10 @@ class FlaskUtils(object):
     Call :meth:`init_app` to configure the extension on an application.
 
     :param app: Flask application instance.
-    :param register_error_handlers: Register the custom error handlers. Default is True.
+    :type app: Optional[Flask]
+
+    :param register_error_handlers: Register the custom error handlers. Default is ``True``.
+    :param register_error_handlers: bool
 
     :Example:
 
@@ -34,6 +37,30 @@ class FlaskUtils(object):
     """
 
     def __init__(self, app: Optional[Flask] = None, register_error_handlers: bool = True):
+        """
+        :param app: Flask application instance.
+        :type app: Optional[Flask]
+
+        :param register_error_handlers: Register the custom error handlers. Default is ``True``.
+        :type register_error_handlers: bool
+
+        :Example:
+
+        .. code-block:: python
+
+                from flask import Flask
+                from flask_utils import FlaskUtils
+
+                app = Flask(__name__)
+                fu = FlaskUtils(app)
+
+                # or
+
+                fu = FlaskUtils()
+                fu.init_app(app)
+
+        .. versionadded:: 0.5.0
+        """
         self.has_error_handlers_registered = False
 
         if app is not None:
@@ -42,7 +69,10 @@ class FlaskUtils(object):
     def init_app(self, app: Flask, register_error_handlers: bool = True) -> None:
         """
         :param app: The Flask application to initialize.
+        :type app: Flask
+
         :param register_error_handlers: Register the custom error handlers. Default is ``True``.
+        :type register_error_handlers: bool
 
         Initialize a Flask application for use with this extension instance. This
         must be called before any request is handled by the application.

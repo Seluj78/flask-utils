@@ -4,7 +4,10 @@ def is_it_true(value: str) -> bool:
     Useful for flask's request.form.get() method and request.args.get() method
 
     :param value: String value to check if it is true
+    :type value: str
+
     :return: True if value is true, False otherwise
+    :rtype: bool
 
     :Example:
 

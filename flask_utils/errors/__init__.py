@@ -20,7 +20,10 @@ def _register_error_handlers(application: Flask) -> None:
     This function will register all the error handlers for the application
 
     :param application: The Flask application to register the error handlers
+    :type application: flask.Flask
+
     :return: None
+    :rtype: None
 
     .. versionchanged:: 0.5.0
         Made the function private. If you want to register the custom error handlers, you need to
@@ -50,7 +53,10 @@ def _register_error_handlers(application: Flask) -> None:
         a custom message and the 400 code
 
         :param error: The error body
+        :type error: BadRequestError
+
         :return: Returns the response formatted
+        :rtype: flask.Response
         """
         return _generate_error_json(error, 400)
 
@@ -61,7 +67,10 @@ def _register_error_handlers(application: Flask) -> None:
         a custom message and the 409 code
 
         :param error: The error body
+        :type error: ConflictError
+
         :return: Returns the response formatted
+        :rtype: flask.Response
         """
 
         return _generate_error_json(error, 409)
@@ -73,7 +82,10 @@ def _register_error_handlers(application: Flask) -> None:
         a custom message and the 403 code
 
         :param error: The error body
+        :type error: ForbiddenError
+
         :return: Returns the response formatted
+        :rtype: flask.Response
         """
 
         return _generate_error_json(error, 403)
@@ -85,7 +97,10 @@ def _register_error_handlers(application: Flask) -> None:
         a custom message and the 404 code.
 
         :param error: The error body
+        :type error: NotFoundError
+
         :return: Returns the response formatted
+        :rtype: flask.Response
         """
 
         return _generate_error_json(error, 404)
@@ -97,7 +112,10 @@ def _register_error_handlers(application: Flask) -> None:
         a custom message and the 401 code.
 
         :param error: The error body
+        :type error: UnauthorizedError
+
         :return: Returns the response formatted
+        :rtype: flask.Response
         """
 
         return _generate_error_json(error, 401)
@@ -109,7 +127,10 @@ def _register_error_handlers(application: Flask) -> None:
         a custom message and the 523 code.
 
         :param error: The error body
+        :type error: OriginIsUnreachableError
+
         :return: Returns the response formatted
+        :rtype: flask.Response
         """
 
         return _generate_error_json(error, 523)
@@ -121,7 +142,10 @@ def _register_error_handlers(application: Flask) -> None:
         a custom message and the 521 code.
 
         :param error: The error body
+        :type error: WebServerIsDownError
+
         :return: Returns the response formatted
+        :rtype: flask.Response
         """
 
         return _generate_error_json(error, 521)
@@ -133,7 +157,10 @@ def _register_error_handlers(application: Flask) -> None:
         a custom message and the 424 code.
 
         :param error: The error body
+        :type error: FailedDependencyError
+
         :return: Returns the response formatted
+        :rtype: flask.Response
         """
 
         return _generate_error_json(error, 424)
@@ -145,7 +172,10 @@ def _register_error_handlers(application: Flask) -> None:
         a custom message and the 410 code.
 
         :param error: The error body
+        :type error: GoneError
+
         :return: Returns the response formatted
+        :rtype: flask.Response
         """
 
         return _generate_error_json(error, 410)
@@ -157,7 +187,10 @@ def _register_error_handlers(application: Flask) -> None:
         a custom message and the 422 code.
 
         :param error: The error body
+        :type error: UnprocessableEntityError
+
         :return: Returns the response formatted
+        :rtype: flask.Response
         """
 
         return _generate_error_json(error, 422)
@@ -169,7 +202,10 @@ def _register_error_handlers(application: Flask) -> None:
         a custom message and the 503 code.
 
         :param error: The error body
+        :type error: ServiceUnavailableError
+
         :return: Returns the response formatted
+        :rtype: flask.Response
         """
 
         return _generate_error_json(error, 503)
