@@ -9,8 +9,13 @@ def _generate_error_json(error: _BaseFlaskException, status_code: int) -> Respon
     This function is used to generate a json of the error passed
 
     :param error: The error containing the message and solution
+    :type error: _BaseFlaskException
+
     :param status_code: The status code of the error.
+    :type status_code: int
+
     :return: Returns a json containing all the info
+    :rtype: flask.Response
 
     :Example:
 
