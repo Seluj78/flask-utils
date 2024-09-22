@@ -565,3 +565,17 @@ class TestMaxDepth:
             assert len(w) == 1
             assert issubclass(w[-1].category, SyntaxWarning)
             assert "Maximum depth of 4 reached." in str(w[-1].message)
+
+
+class TestJSONOverridesRouteParams:
+    @pytest.fixture(autouse=True)
+    def setup_routes(self, flask_client):
+        @flask_client.post("/users/<int:user_id>")
+        @validate_params()
+        def create_user(user_id: int):
+            return f"{user_id}"
+
+    def test_valid_request(self, client):
+        response = client.post("/users/123", json={"user_id": 456})
+        assert response.status_code == 200
+        assert response.text == "456"

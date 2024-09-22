@@ -225,6 +225,33 @@ def validate_params() -> Callable:  # type: ignore
             * Optional
             * Union
 
+    .. warning::
+        If a parameter exists both in the route parameters and in the JSON body,
+        the value from the JSON body will override the route parameter. A warning
+        is issued when this occurs.
+
+        :Example:
+
+        .. code-block:: python
+
+            from flask import Flask, request
+            from typing import List, Dict
+            from flask_utils.decorators import validate_params
+            from flask_utils.errors import BadRequestError
+
+            app = Flask(__name__)
+
+            @app.route("/users/<int:user_id>", methods=["POST"])
+            @validate_params()
+            def create_user(user_id: int):
+                print(f"User ID: {user_id}")
+                return "User created"
+
+            ...
+
+            requests.post("/users/123", json={"user_id": 456})
+            # Output: User ID: 456
+
     .. versionchanged:: 1.0.0
         The decorator doesn't take any parameters anymore,
         it loads the types and parameters from the function signature as well as the Flask route's slug parameters.
