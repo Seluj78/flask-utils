@@ -41,7 +41,10 @@ def _is_optional(type_hint: Type) -> bool:  # type: ignore
     """Check if the type hint is :data:`~typing.Optional`.
 
     :param type_hint: Type hint to check.
+    :type type_hint: Type
+
     :return: True if the type hint is :data:`~typing.Optional`, False otherwise.
+    :rtype: bool
 
     :Example:
 
@@ -62,7 +65,10 @@ def _make_optional(type_hint: Type) -> Type:  # type: ignore
     """Wrap type hint with :data:`~typing.Optional` if it's not already.
 
     :param type_hint: Type hint to wrap.
+    :type type_hint: Type
+
     :return: Type hint wrapped with :data:`~typing.Optional`.
+    :rtype: Type
 
     :Example:
 
@@ -85,10 +91,14 @@ def _is_allow_empty(value: Any, type_hint: Type, allow_empty: bool) -> bool:  # 
     """Determine if the value is considered empty and whether it's allowed.
 
     :param value: Value to check.
+    :type value: Any
     :param type_hint: Type hint to check against.
+    :type type_hint: Type
     :param allow_empty: Whether to allow empty values.
+    :type allow_empty: bool
 
     :return: True if the value is empty and allowed, False otherwise.
+    :rtype: bool
 
     :Example:
 
@@ -118,11 +128,16 @@ def _check_type(value: Any, expected_type: Type, allow_empty: bool = False, curr
     """Check if the value matches the expected type, recursively if necessary.
 
     :param value: Value to check.
+    :type value: Any
     :param expected_type: Expected type.
+    :type expected_type: Type
     :param allow_empty: Whether to allow empty values.
+    :type allow_empty: bool
     :param curr_depth: Current depth of the recursive check.
+    :type curr_depth: int
 
     :return: True if the value matches the expected type, False otherwise.
+    :rtype: bool
 
     :Example:
 

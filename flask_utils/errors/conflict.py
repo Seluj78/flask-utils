@@ -9,7 +9,9 @@ class ConflictError(_BaseFlaskException):
     When raised, it will return a 409 status code with the message and solution provided.
 
     :param msg: The message to be displayed in the error.
+    :type msg: str
     :param solution: The solution to the error.
+    :type solution: str
 
     :Example:
 
