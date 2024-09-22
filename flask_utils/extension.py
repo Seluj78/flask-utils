@@ -48,6 +48,11 @@ class FlaskUtils(object):
             fu = FlaskUtils(app)
             app.config["VALIDATE_PARAMS_MAX_DEPTH"] = 3
 
+    The `VALIDATE_PARAMS_MAX_DEPTH` configuration determines the maximum depth of nested dictionary validation
+    when using the `validate_params` decorator. This allows fine-tuning of validation behavior for
+    complex nested structures.
+
+
     .. versionadded:: 0.5.0
     """
 
@@ -122,4 +127,5 @@ class FlaskUtils(object):
             self.has_error_handlers_registered = True
 
         app.extensions["flask_utils"] = self
+        # Default depth of 4 allows for moderately nested structures while not slowing down too much the validation
         app.config.setdefault("VALIDATE_PARAMS_MAX_DEPTH", 4)
