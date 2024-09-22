@@ -7,6 +7,7 @@ from typing import Optional
 
 import pytest
 from flask import Flask
+from flask import jsonify
 
 from flask_utils import validate_params
 
@@ -579,3 +580,22 @@ class TestJSONOverridesRouteParams:
         response = client.post("/users/123", json={"user_id": 456})
         assert response.status_code == 200
         assert response.text == "456"
+
+
+class TestEmptyValues:
+    @pytest.fixture(autouse=True)
+    def setup_routes(self, flask_client):
+        @flask_client.route("/empty", methods=["POST"])
+        @validate_params()
+        def empty_route(name: Optional[str]):
+            return jsonify({"name": name})
+
+    def test_empty_value_optional(self, client):
+        response = client.post("/empty", json={})
+        assert response.status_code == 200
+        assert response.get_json() == {"name": None}
+
+        # Testing with 'name' as empty string
+        response = client.post("/empty", json={"name": ""})
+        assert response.status_code == 200
+        assert response.get_json() == {"name": ""}
