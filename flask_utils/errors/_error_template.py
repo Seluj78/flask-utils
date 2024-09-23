@@ -15,16 +15,16 @@ def _generate_error_dict(error: _BaseFlaskException) -> Dict[str, Any]:
     :type error: _BaseFlaskException
 
     :return: Returns a dict containing a json representation of the error
-    :rtype: dict
+    :rtype: Dict[str, Any]
 
     :Example:
 
     .. code-block:: python
 
         from flask_utils import ConflictError  # or any other error
-        from flask_utils.errors._error_template import _generate_error_json
+        from flask_utils.errors._error_template import _generate_error_dict
 
-        json = _generate_error_json(error)
+        json = _generate_error_dict(error)
         # Sample output:
         # {
         #     "success": False,
@@ -67,7 +67,7 @@ def _generate_error_response(error: _BaseFlaskException) -> Response:
     .. code-block:: python
 
         from flask_utils.errors import _BaseFlaskException
-        from flask_utils.errors._error_template import _generate_error_json
+        from flask_utils.errors._error_template import _generate_error_response
 
         class MyError(_BaseFlaskException):
             self.name = "MyError"
@@ -77,12 +77,12 @@ def _generate_error_response(error: _BaseFlaskException) -> Response:
 
         error = MyError("This is an error", "This is the solution")
 
-        json = _generate_error_json(error, 666)
+        response = _generate_error_response(error, 666)
 
     .. versionchanged:: 0.8.0
-        This function was renamed from ``generate_error_json`` to ``_generate_error_response``.
+        This function was renamed from ``_generate_error_json`` to ``_generate_error_response``.
         It now returns a ``flask.Response`` object, calling
-        :func:`~flask_utils.errors._error_template._generate_error_json` to generate the json.
+        :func:`~flask_utils.errors._error_template._generate_error_dict` to generate the dict that will be returned.
 
     .. versionadded:: 0.1.0
     """
