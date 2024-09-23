@@ -56,6 +56,7 @@ Private API
 .. autofunction:: flask_utils.decorators._is_allow_empty
 .. autofunction:: flask_utils.decorators._check_type
 
-.. autofunction:: flask_utils.errors._error_template._generate_error_json
+.. autofunction:: flask_utils.errors._error_template._generate_error_dict
+.. autofunction:: flask_utils.errors._error_template._generate_error_response
 
 .. autofunction:: flask_utils.errors._register_error_handlers

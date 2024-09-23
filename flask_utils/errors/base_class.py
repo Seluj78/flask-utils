@@ -5,14 +5,17 @@ class _BaseFlaskException(Exception):
     """
     This is the base class for all the exceptions in this package.
 
-    :param msg: The message to be displayed in the error.
+    :param name: The name of the error
+    :type name: str
+
+    :param msg: The message to be displayed
     :type msg: str
-    :param solution: The solution to the error.
-    :type solution: Optional[str]
-    :param status_code: The status code of the error.
-    :type status_code: Optional[int]
-    :param name: The name of the error.
-    :type name: Optional[str]
+
+    :param solution: The solution to the problem
+    :type solution: str
+
+    :param status_code: The status code to be returned
+    :type status_code: int
 
     :Example:
 
@@ -29,7 +32,7 @@ class _BaseFlaskException(Exception):
     .. versionadded:: 0.1.0
     """
 
-    name: Optional[str] = None
-    msg: Optional[str] = None
+    name: str = "BaseError"
+    msg: str = "An error occurred"
     solution: Optional[str] = "Try again."
-    status_code: Optional[int] = 400
+    status_code: int = 400

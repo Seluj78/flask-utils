@@ -7,7 +7,7 @@ from flask_utils.errors.notfound import NotFoundError
 from flask_utils.errors.forbidden import ForbiddenError
 from flask_utils.errors.badrequest import BadRequestError
 from flask_utils.errors.unauthorized import UnauthorizedError
-from flask_utils.errors._error_template import _generate_error_json
+from flask_utils.errors._error_template import _generate_error_response
 from flask_utils.errors.failed_dependency import FailedDependencyError
 from flask_utils.errors.web_server_is_down import WebServerIsDownError
 from flask_utils.errors.service_unavailable import ServiceUnavailableError
@@ -58,7 +58,7 @@ def _register_error_handlers(application: Flask) -> None:
         :return: Returns the response formatted
         :rtype: flask.Response
         """
-        return _generate_error_json(error, 400)
+        return _generate_error_response(error)
 
     @application.errorhandler(ConflictError)
     def generate_conflict(error: ConflictError) -> Response:
@@ -73,7 +73,7 @@ def _register_error_handlers(application: Flask) -> None:
         :rtype: flask.Response
         """
 
-        return _generate_error_json(error, 409)
+        return _generate_error_response(error)
 
     @application.errorhandler(ForbiddenError)
     def generate_forbidden(error: ForbiddenError) -> Response:
@@ -88,7 +88,7 @@ def _register_error_handlers(application: Flask) -> None:
         :rtype: flask.Response
         """
 
-        return _generate_error_json(error, 403)
+        return _generate_error_response(error)
 
     @application.errorhandler(NotFoundError)
     def generate_notfound(error: NotFoundError) -> Response:
@@ -103,7 +103,7 @@ def _register_error_handlers(application: Flask) -> None:
         :rtype: flask.Response
         """
 
-        return _generate_error_json(error, 404)
+        return _generate_error_response(error)
 
     @application.errorhandler(UnauthorizedError)
     def generate_unauthorized(error: UnauthorizedError) -> Response:
@@ -118,7 +118,7 @@ def _register_error_handlers(application: Flask) -> None:
         :rtype: flask.Response
         """
 
-        return _generate_error_json(error, 401)
+        return _generate_error_response(error)
 
     @application.errorhandler(OriginIsUnreachableError)
     def generate_origin_is_unreachable(error: OriginIsUnreachableError) -> Response:
@@ -133,7 +133,7 @@ def _register_error_handlers(application: Flask) -> None:
         :rtype: flask.Response
         """
 
-        return _generate_error_json(error, 523)
+        return _generate_error_response(error)
 
     @application.errorhandler(WebServerIsDownError)
     def generate_web_server_is_down(error: WebServerIsDownError) -> Response:
@@ -148,7 +148,7 @@ def _register_error_handlers(application: Flask) -> None:
         :rtype: flask.Response
         """
 
-        return _generate_error_json(error, 521)
+        return _generate_error_response(error)
 
     @application.errorhandler(FailedDependencyError)
     def generate_failed_dependency(error: FailedDependencyError) -> Response:
@@ -163,7 +163,7 @@ def _register_error_handlers(application: Flask) -> None:
         :rtype: flask.Response
         """
 
-        return _generate_error_json(error, 424)
+        return _generate_error_response(error)
 
     @application.errorhandler(GoneError)
     def generate_gone(error: GoneError) -> Response:
@@ -178,7 +178,7 @@ def _register_error_handlers(application: Flask) -> None:
         :rtype: flask.Response
         """
 
-        return _generate_error_json(error, 410)
+        return _generate_error_response(error)
 
     @application.errorhandler(UnprocessableEntityError)
     def generate_unprocessable_entity(error: UnprocessableEntityError) -> Response:
@@ -193,7 +193,7 @@ def _register_error_handlers(application: Flask) -> None:
         :rtype: flask.Response
         """
 
-        return _generate_error_json(error, 422)
+        return _generate_error_response(error)
 
     @application.errorhandler(ServiceUnavailableError)
     def generate_service_unavailable(error: ServiceUnavailableError) -> Response:
@@ -208,7 +208,7 @@ def _register_error_handlers(application: Flask) -> None:
         :rtype: flask.Response
         """
 
-        return _generate_error_json(error, 503)
+        return _generate_error_response(error)
 
 
 __all__ = [
@@ -217,7 +217,7 @@ __all__ = [
     "ForbiddenError",
     "NotFoundError",
     "UnauthorizedError",
-    "_generate_error_json",
+    "_generate_error_response",
     "FailedDependencyError",
     "WebServerIsDownError",
     "OriginIsUnreachableError",
