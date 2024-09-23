@@ -28,7 +28,7 @@ dependencies = [
 ]
 
 [tool.setuptools]
-packages = ["flask_utils"]
+packages = ["flask_utils", "flask_utils.errors"]
 
 [tool.setuptools.dynamic]
 version = {attr = "flask_utils.__version__"}
