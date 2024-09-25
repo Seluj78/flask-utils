@@ -1,5 +1,6 @@
 import pytest
 
+from flask_utils import MethodNotAllowedError
 from flask_utils.errors import GoneError
 from flask_utils.errors import ConflictError
 from flask_utils.errors import NotFoundError
@@ -28,6 +29,7 @@ class TestGenerateErrorDict:
             ServiceUnavailableError("This is the message", "This is the solution"),
             OriginIsUnreachableError("This is the message", "This is the solution"),
             WebServerIsDownError("This is the message", "This is the solution"),
+            MethodNotAllowedError("This is the message", "This is the solution"),
         ],
     )
     def test_generate_error_dict(self, error):

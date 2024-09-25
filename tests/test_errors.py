@@ -1,5 +1,6 @@
 import pytest
 
+from flask_utils import MethodNotAllowedError
 from flask_utils.errors.gone import GoneError
 from flask_utils.errors.conflict import ConflictError
 from flask_utils.errors.notfound import NotFoundError
@@ -58,6 +59,10 @@ def setup_routes(flask_client):
     @flask_client.route("/service_unavailable")
     def service_unavailable():
         raise ServiceUnavailableError("Service unavailable error")
+
+    @flask_client.get("/method_not_allowed")
+    def method_not_allowed():
+        raise MethodNotAllowedError("Method not allowed error")
 
 
 def test_bad_request_error_handler(client):
@@ -179,3 +184,19 @@ def test_service_unavailable_error_handler(client):
     assert response_json["error"]["solution"] == "Try again later."
     assert response_json["error"]["name"] == "Service Unavailable"
     assert response_json["error"]["type"] == "ServiceUnavailableError"
+
+
+def test_method_not_allowed_error_handler(client):
+    response = client.get("/method_not_allowed")
+    assert response.status_code == 405
+
+    response_json = response.get_json()
+    assert response_json["error"]["message"] == "Method not allowed error"
+    assert response_json["error"]["solution"] == "Try again."
+    assert response_json["error"]["name"] == "Method Not Allowed"
+    assert response_json["error"]["type"] == "MethodNotAllowedError"
+
+
+def test_method_not_allowed_with_post_method(client):
+    response = client.post("/method_not_allowed")
+    assert response.status_code == 405

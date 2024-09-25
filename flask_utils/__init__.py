@@ -1,5 +1,5 @@
 # Increment versions here according to SemVer
-__version__ = "0.8.0"
+__version__ = "0.9.0"
 
 from flask_utils.utils import is_it_true
 from flask_utils.errors import GoneError
@@ -10,6 +10,7 @@ from flask_utils.errors import BadRequestError
 from flask_utils.errors import UnauthorizedError
 from flask_utils.errors import WebServerIsDownError
 from flask_utils.errors import FailedDependencyError
+from flask_utils.errors import MethodNotAllowedError
 from flask_utils.errors import ServiceUnavailableError
 from flask_utils.errors import OriginIsUnreachableError
 from flask_utils.errors import UnprocessableEntityError
@@ -28,6 +29,7 @@ __all__ = [
     "GoneError",
     "UnprocessableEntityError",
     "ServiceUnavailableError",
+    "MethodNotAllowedError",
     "validate_params",
     "is_it_true",
     "FlaskUtils",

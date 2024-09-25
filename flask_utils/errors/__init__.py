@@ -9,6 +9,7 @@ from flask_utils.errors.badrequest import BadRequestError
 from flask_utils.errors.unauthorized import UnauthorizedError
 from flask_utils.errors._error_template import _generate_error_response
 from flask_utils.errors.failed_dependency import FailedDependencyError
+from flask_utils.errors.method_not_allowed import MethodNotAllowedError
 from flask_utils.errors.web_server_is_down import WebServerIsDownError
 from flask_utils.errors.service_unavailable import ServiceUnavailableError
 from flask_utils.errors.unprocessableentity import UnprocessableEntityError
@@ -212,6 +213,20 @@ def _register_error_handlers(application: Flask) -> None:
 
         return _generate_error_response(error)
 
+    @application.errorhandler(MethodNotAllowedError)
+    def generate_method_not_allowed(error: MethodNotAllowedError) -> Response:
+        """
+        This is the 405 response creator. It will create a 405 response with
+        a custom message and the 405 code.
+
+        :param error: The error body
+        :type error: MethodNotAllowedError
+
+        :return: Returns the response formatted
+        :rtype: flask.Response
+        """
+        return _generate_error_response(error)
+
 
 __all__ = [
     "BadRequestError",
@@ -226,5 +241,6 @@ __all__ = [
     "GoneError",
     "UnprocessableEntityError",
     "ServiceUnavailableError",
+    "MethodNotAllowedError",
     "_register_error_handlers",
 ]
