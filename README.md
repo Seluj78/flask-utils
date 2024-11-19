@@ -1,3 +1,7 @@
+# This project is archived
+
+I've moved on to using FastAPI in my new company, and I don't feel the need to maintain this anymore
+
 [![Documentation Status](https://readthedocs.org/projects/flask-utils/badge/?version=latest)](https://flask-utils.readthedocs.io/en/latest/?badge=latest)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/Seluj78/flask-utils)
 ![GitHub commits since latest release](https://img.shields.io/github/commits-since/seluj78/flask-utils/latest)
